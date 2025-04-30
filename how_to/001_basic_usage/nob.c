@@ -47,7 +47,7 @@ int main(int argc, char **argv)
     // Let's append the command line arguments
 #if !defined(_MSC_VER)
     // On POSIX
-    nob_cmd_append(&cmd, "cc", "-Wall", "-Wextra", "-o", BUILD_FOLDER"hello", SRC_FOLDER"hello.c");
+    nob_cmd_append(&cmd, "gcc", "-Wall", "-Wextra", "-o", BUILD_FOLDER"hello", SRC_FOLDER"hello.c");
 #else
     // On MSVC
     nob_cmd_append(&cmd, "cl", "-I.", "-o", BUILD_FOLDER"hello", SRC_FOLDER"hello.c");

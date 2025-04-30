@@ -4,28 +4,28 @@
 
    # Quick Example
 
-      ```c
-      // nob.c
-      #define NOB_IMPLEMENTATION
-      #include "nob.h"
+   ```c
+   // nob.c
+   #define NOB_IMPLEMENTATION
+   #include "nob.h"
 
-      int main(int argc, char **argv)
-      {
-          NOB_GO_REBUILD_URSELF(argc, argv);
-          Nob_Cmd cmd = {0};
-          nob_cmd_append(&cmd, "cc", "-Wall", "-Wextra", "-o", "main", "main.c");
-          if (!nob_cmd_run_sync(cmd)) return 1;
-          return 0;
-      }
-      ```
+   int main(int argc, char **argv)
+   {
+   NOB_GO_REBUILD_URSELF(argc, argv);
+   Nob_Cmd cmd = {0};
+   nob_cmd_append(&cmd, "gcc", "-Wall", "-Wextra", "-o", "main", "main.c");
+   if (!nob_cmd_run_sync(cmd)) return 1;
+   return 0;
+   }
+   ```
 
-      ```console
-      $ cc -o nob nob.c
-      $ ./nob
-      ```
+   ```console
+   $ gcc -o nob nob.c
+   $ ./nob
+   ```
 
-      The `nob` automatically rebuilds itself if `nob.c` is modified thanks to
-      the `NOB_GO_REBUILD_URSELF` macro (don't forget to check out how it works below)
+   The `nob` automatically rebuilds itself if `nob.c` is modified thanks to
+   the `NOB_GO_REBUILD_URSELF` macro (don't forget to check out how it works below)
 
    # The Zoo of `nob_cmd_run_*` Functions
 
@@ -34,7 +34,7 @@
 
       ```c
       Nob_Cmd cmd = {0};
-      nob_cmd_append(&cmd, "cc", "-Wall", "-Wextra", "-o", "main", "main.c");
+      nob_cmd_append(&cmd, "gcc", "-Wall", "-Wextra", "-o", "main", "main.c");
       ```
 
       Then you run it
@@ -60,7 +60,7 @@
       ```c
       Nob_Cmd cmd = {0};
 
-      nob_cmd_append(&cmd, "cc", "-Wall", "-Wextra", "-o", "main", "main.c");
+      nob_cmd_append(&cmd, "gcc", "-Wall", "-Wextra", "-o", "main", "main.c");
       if (!nob_cmd_run_sync(cmd)) return 1;
       cmd.count = 0;
 
@@ -75,7 +75,7 @@
       ```c
       Nob_Cmd cmd = {0};
 
-      nob_cmd_append(&cmd, "cc", "-Wall", "-Wextra", "-o", "main", "main.c");
+      nob_cmd_append(&cmd, "gcc", "-Wall", "-Wextra", "-o", "main", "main.c");
       if (!nob_cmd_run_sync_and_reset(&cmd)) return 1;
 
       nob_cmd_append(&cmd, "./main", "foo", "bar", "baz");
@@ -141,7 +141,7 @@
       {
           NOB_GO_REBUILD_URSELF(argc, argv);
           Cmd cmd = {0};
-          cmd_append(&cmd, "cc", "-Wall", "-Wextra", "-o", "main", "main.c");
+          cmd_append(&cmd, "gcc", "-Wall", "-Wextra", "-o", "main", "main.c");
           if (!cmd_run_sync(cmd)) return 1;
           return 0;
       }
@@ -495,14 +495,14 @@ bool nob_set_current_dir(const char *path);
 #ifndef nob_cc
 #  if _WIN32
 #    if defined(__GNUC__)
-#       define nob_cc(cmd) nob_cmd_append(cmd, "cc")
+#       define nob_cc(cmd) nob_cmd_append(cmd, "gcc")
 #    elif defined(__clang__)
 #       define nob_cc(cmd) nob_cmd_append(cmd, "clang")
 #    elif defined(_MSC_VER)
 #       define nob_cc(cmd) nob_cmd_append(cmd, "cl.exe")
 #    endif
 #  else
-#    define nob_cc(cmd) nob_cmd_append(cmd, "cc")
+#    define nob_cc(cmd) nob_cmd_append(cmd, "gcc")
 #  endif
 #endif // nob_cc
 
@@ -542,7 +542,7 @@ bool nob_set_current_dir(const char *path);
 #       define NOB_REBUILD_URSELF(binary_path, source_path) "cl.exe", nob_temp_sprintf("/Fe:%s", (binary_path)), source_path
 #    endif
 #  else
-#    define NOB_REBUILD_URSELF(binary_path, source_path) "cc", "-o", binary_path, source_path
+#    define NOB_REBUILD_URSELF(binary_path, source_path) "gcc", "-o", binary_path, source_path
 #  endif
 #endif
 
